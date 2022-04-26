@@ -1,0 +1,16 @@
+run = ["bundle", "exec", "ruby", "src/main.rb"]
+
+entrypoint = "src/game.rb"
+
+[packager]
+language = "ruby"
+
+[packager.features]
+packageSearch = true
+guessImports = true
+
+[languages.ruby]
+pattern = "**/*.rb"
+
+[languages.ruby.languageServer]
+start = ["solargraph", "stdio"]
