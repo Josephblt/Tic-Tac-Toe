@@ -3,5 +3,6 @@
         pkgs.ruby
         pkgs.solargraph
         pkgs.rufo
+        pkgs.rubyPackages.rspec
 	];
 }
