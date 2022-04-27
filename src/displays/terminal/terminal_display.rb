@@ -78,7 +78,6 @@ class TerminalDisplay < Display
 
   def draw
     draw_borders
-    print @cursor.move_to 0, 0
     (0..@height - 1).each do |y|
       (0..@width - 1).each do |x|
         if @display_matrix[x][y] != @last_display_matrix[x][y]

@@ -4,5 +4,6 @@
         pkgs.solargraph
         pkgs.rufo
         pkgs.rubyPackages.rspec
+        pkgs.rubyPackages.simplecov
 	];
 }
