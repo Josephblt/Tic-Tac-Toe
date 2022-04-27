@@ -8,6 +8,6 @@ gem 'tty-cursor', '~> 0.7.1'
 
 gem 'tty-reader', '~> 0.9.0'
 
-gem "rspec", "~> 3.11"
+gem 'rspec', '~> 3.11'
 
-gem "simplecov", "~> 0.21.2"
+gem 'simplecov', '~> 0.21.2'
