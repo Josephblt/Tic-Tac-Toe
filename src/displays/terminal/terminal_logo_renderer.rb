@@ -3,7 +3,7 @@
 # Renderer for Game Logo State
 class TerminalLogoRenderer < TerminalGameStateRenderer
   MESSAGE_ENTER = 'PRESS ENTER TO START...'
-  MESSAGE_EXIT = 'OR ESC TO EXIT.'
+  MESSAGE_EXIT = 'OR BACK TO EXIT.'
 
   def initialize(display)
     super(display)

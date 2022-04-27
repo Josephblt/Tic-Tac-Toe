@@ -2,8 +2,8 @@
 
 # Renderer for Game Logo State
 class TerminalInGameRenderer < TerminalGameStateRenderer
-  HIGHLIGHT = '⛶'
-  INVALID = '🛇'
+  HIGHLIGHT = '*'
+  INVALID = ' '
   PLAYER_1_TURN = '▶'
   PLAYER_2_TURN = '◀'
 
@@ -30,8 +30,8 @@ class TerminalInGameRenderer < TerminalGameStateRenderer
   end
 
   def draw_players_header(game_state)
-    player1_text = "#{PLAYER1} #{SYMBOLS[game_state.game.board.player1_symbol]}"
-    player2_text = "#{SYMBOLS[game_state.game.board.player2_symbol]} #{PLAYER2}"
+    player1_text = "#{PLAYER1} - #{SYMBOLS[game_state.game.board.player1_symbol]}"
+    player2_text = "#{SYMBOLS[game_state.game.board.player2_symbol]} - #{PLAYER2}"
     player_header = "#{player1_text}   #{player2_text}"
     player_header = draw_player_turn(game_state, player_header)
     draw_centered 4, player_header

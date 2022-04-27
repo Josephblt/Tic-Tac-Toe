@@ -21,12 +21,12 @@ class TerminalGameStateRenderer < GameStateRenderer
   PLAYERS_HEADER = "#{PLAYER1} - #{PLAYER2}"
   SYMBOLS = {
     Symbol::EMPTY => ' ',
-    Symbol::CROSS => '🗙',
-    Symbol::NOUGHT => '🞉'
+    Symbol::CROSS => 'X',
+    Symbol::NOUGHT => 'O'
   }.freeze
-  TIP1 = 'ARROW KEYS TO CHANGE/SELECT'
+  TIP1 = 'AWSD KEYS TO CHANGE/SELECT'
   TIP2 = 'ENTER KEY TO ACCEPT'
-  TIP3 = 'ESC KEY TO QUIT'
+  TIP3 = 'BACK KEY TO EXIT'
   TITLE = 'SCHOLL\'S TIC-TAC-TOE!'
 
   def draw(game_state) end
