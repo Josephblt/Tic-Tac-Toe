@@ -13,7 +13,7 @@ require_relative 'terminal_over_renderer'
 # Renderer for terminal.
 class TerminalDisplay < Display
   def initialize
-    super(41, 17)
+    super(39, 17)
     @cursor = TTY::Cursor
     print @cursor.hide
     print @cursor.clear_screen
