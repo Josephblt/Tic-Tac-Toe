@@ -4,7 +4,7 @@ require 'js'
 
 bridge = JS.global[:terminalBridge]
 display = BrowserTerminalDisplay.new(bridge)
-input = BrowserInput.new(bridge)
+input = BrowserButtonInput.new(bridge)
 game = Game.new(display, input)
 game.start
 

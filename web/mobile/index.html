@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ruby WASM Tic-Tac-Toe - Mobile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xterm/xterm@5.5.0/css/xterm.css">
+    <style>
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        background: #111;
+        overflow: hidden;
+      }
+
+      body {
+        display: grid;
+        place-items: center;
+        position: fixed;
+        inset: 0;
+        touch-action: none;
+      }
+
+      #app {
+        display: grid;
+        gap: 12px;
+        justify-items: center;
+        width: 100vw;
+        height: 100%;
+        max-width: 100vw;
+        padding: 12px;
+        box-sizing: border-box;
+        overflow: hidden;
+      }
+
+      #terminal {
+        display: grid;
+        place-items: center;
+        max-width: 100%;
+        overflow: hidden;
+        width: 100%;
+        height: min(420px, calc(100vh - 244px));
+      }
+
+      #terminal .xterm,
+      #terminal .xterm-screen,
+      #terminal .xterm-viewport {
+        max-width: 100% !important;
+        overflow: hidden !important;
+      }
+
+      #controls {
+        display: grid;
+        gap: 8px;
+        grid-template-columns: repeat(3, 56px);
+        grid-template-rows: repeat(3, 44px) 14px 44px;
+      }
+
+      #controls button {
+        appearance: none;
+        background: #222;
+        border: 1px solid #555;
+        color: #f2f2f2;
+        font: 700 18px "Noto Sans Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        min-width: 0;
+        touch-action: manipulation;
+      }
+
+      #controls button:active {
+        background: #444;
+      }
+
+      #control-up {
+        grid-column: 2;
+      }
+
+      #control-left {
+        grid-column: 1;
+        grid-row: 2;
+      }
+
+      #control-action {
+        grid-column: 2;
+        grid-row: 2;
+      }
+
+      #control-right {
+        grid-column: 3;
+        grid-row: 2;
+      }
+
+      #control-back {
+        grid-column: 2;
+        grid-row: 5;
+      }
+
+      #control-down {
+        grid-column: 2;
+        grid-row: 3;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div id="terminal"></div>
+      <div id="controls" aria-label="Game controls">
+        <button id="control-up" type="button" data-input="up" aria-label="Up">▲</button>
+        <button id="control-left" type="button" data-input="left" aria-label="Left">◀</button>
+        <button id="control-action" type="button" data-input="action" aria-label="Accept">↵</button>
+        <button id="control-right" type="button" data-input="right" aria-label="Right">▶</button>
+        <button id="control-back" type="button" data-input="back" aria-label="Back">⌫</button>
+        <button id="control-down" type="button" data-input="down" aria-label="Down">▼</button>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@xterm/xterm@5.5.0/lib/xterm.js"></script>
+    <script type="module">
+      import { DefaultRubyVM } from "https://cdn.jsdelivr.net/npm/@ruby/wasm-wasi@2.9.3-2.9.4/dist/browser/+esm";
+
+      await document.fonts.ready;
+
+      const term = new Terminal({
+        cols: 41,
+        rows: 19,
+        convertEol: true,
+        cursorBlink: false,
+        fontFamily: "'Noto Sans Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+        fontSize: 13,
+        theme: {
+          background: "#111111",
+          foreground: "#f2f2f2",
+          cursor: "#f2f2f2"
+        }
+      });
+
+      term.open(document.getElementById("terminal"));
+      term.writeln("Loading Ruby WASM Tic-Tac-Toe...");
+
+      const keyQueue = [];
+      const touchKeys = {
+        action: "\r",
+        back: "\u007F",
+        down: "s",
+        left: "a",
+        right: "d",
+        up: "w"
+      };
+
+      document.querySelectorAll("#controls button").forEach((button) => {
+        button.addEventListener("pointerdown", (event) => {
+          event.preventDefault();
+          keyQueue.push(touchKeys[button.dataset.input]);
+        });
+      });
+
+      window.terminalBridge = {
+        readKey() {
+          return keyQueue.shift() || "";
+        },
+        write(text) {
+          term.write(String(text));
+        },
+        writeln(text) {
+          term.writeln(String(text));
+        }
+      };
+
+      const sourceFiles = [
+        "../../src/symbol.rb",
+        "../../src/options/ai_options.rb",
+        "../../src/options/controller_options.rb",
+        "../../src/options/symbols_options.rb",
+        "../../src/options/setup.rb",
+        "../../src/board.rb",
+        "../../src/inputs/input.rb",
+        "../../src/controllers/controller.rb",
+        "../../src/controllers/human_controller.rb",
+        "../../src/controllers/ai_controller.rb",
+        "../../src/states/game_state.rb",
+        "../../src/states/goodbye_state.rb",
+        "../../src/states/continue_state.rb",
+        "../../src/states/over_state.rb",
+        "../../src/states/logo_state.rb",
+        "../../src/states/setup_state.rb",
+        "../../src/states/in_game_state.rb",
+        "../../src/displays/game_state_renderer.rb",
+        "../../src/renderers/text/text_game_state_renderer.rb",
+        "../../src/renderers/text/text_continue_renderer.rb",
+        "../../src/renderers/text/text_goodbye_renderer.rb",
+        "../../src/renderers/text/text_in_game_renderer.rb",
+        "../../src/renderers/text/text_logo_renderer.rb",
+        "../../src/renderers/text/text_over_renderer.rb",
+        "../../src/renderers/text/text_setup_renderer.rb",
+        "../../src/displays/display.rb",
+        "../../src/game.rb",
+        "./browser_button_input.rb",
+        "./browser_terminal_display.rb",
+        "./wasm_entrypoint.rb"
+      ];
+
+      const fetchSource = async (path) => {
+        const response = await fetch(path, { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error(`${path}: ${response.status}`);
+        }
+        return await response.text();
+      };
+
+      try {
+        const wasmResponse = await fetch("https://cdn.jsdelivr.net/npm/@ruby/3.3-wasm-wasi@2.9.3-2.9.4/dist/ruby+stdlib.wasm");
+        const wasmModule = await WebAssembly.compileStreaming(wasmResponse);
+        const { vm } = await DefaultRubyVM(wasmModule);
+
+        vm.eval(`
+          module Kernel
+            def require_relative(_path)
+              true
+            end
+          end
+        `);
+
+        for (const path of sourceFiles) {
+          vm.eval(await fetchSource(path));
+        }
+      } catch (error) {
+        term.writeln("");
+        term.writeln(`Ruby WASM Tic-Tac-Toe failed: ${error.message}`);
+        console.error(error);
+      }
+    </script>
+  </body>
+</html>

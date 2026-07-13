@@ -2,9 +2,9 @@
 
 require 'js'
 
-# Browser-side input adapter. It preserves the existing Input contract while
-# receiving key events from xterm.js through a small JavaScript queue.
-class BrowserInput < Input
+# Browser mobile input adapter. It preserves the existing Input contract while
+# receiving touch button events through a small JavaScript queue.
+class BrowserButtonInput < Input
   def initialize(bridge)
     super()
     @bridge = bridge
