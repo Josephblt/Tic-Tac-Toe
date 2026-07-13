@@ -13,6 +13,10 @@ class AIController < Controller
   def activate
     super
     @depth_aux = 0
+    @score_cache = {}
+    @ai_move = opening_move(@in_game_state.game.board)
+    return if @ai_move
+
     moves = best_moves(@in_game_state.game.board)
     @ai_move = moves[rand(moves.size)]
   end
@@ -33,7 +37,7 @@ class AIController < Controller
     best_score = MIN
 
     board.available_cells.each do |move|
-      move_score = score_after_move board, move, true, 0
+      move_score = score_after_move board, move, true, 0, MIN, MAX
       next unless move_score >= best_score
 
       best_moves.clear if move_score > best_score
@@ -52,17 +56,29 @@ class AIController < Controller
     value_a < value_b ? value_a : value_b
   end
 
-  def minmax(board, depth, maximizer)
+  def minmax(board, depth, maximizer, alpha, beta)
+    cache_key = minmax_cache_key(board, depth, maximizer, alpha, beta)
+    return @score_cache[cache_key] if @score_cache.key? cache_key
+
     score = score_player(board, depth)
-    return score if board.game_over?
-    return score if @max_depth <= depth
+    if board.game_over? || @max_depth <= depth
+      @score_cache[cache_key] = score
+      return score
+    end
 
     best_score = maximizer ? MIN : MAX
     board.available_cells.each do |move|
-      next_best_score = score_after_move board, move, maximizer, depth + 1
-      best_score = maximizer ? max(best_score, next_best_score) : min(best_score, next_best_score)
+      next_best_score = score_after_move board, move, maximizer, depth + 1, alpha, beta
+      if maximizer
+        best_score = max(best_score, next_best_score)
+        alpha = max(alpha, best_score)
+      else
+        best_score = min(best_score, next_best_score)
+        beta = min(beta, best_score)
+      end
+      break if beta <= alpha
     end
-    best_score
+    @score_cache[cache_key] = best_score
   end
 
   def move_execute(board, cell, active)
@@ -73,13 +89,46 @@ class AIController < Controller
     end
   end
 
+  def minmax_cache_key(board, depth, maximizer, alpha, beta)
+    [
+      depth,
+      maximizer,
+      alpha,
+      beta,
+      board.cells[0][0],
+      board.cells[0][1],
+      board.cells[0][2],
+      board.cells[1][0],
+      board.cells[1][1],
+      board.cells[1][2],
+      board.cells[2][0],
+      board.cells[2][1],
+      board.cells[2][2]
+    ]
+  end
+
   def move_undo(board, cell)
     board.convert_empty cell
   end
 
-  def score_after_move(board, cell, active, depth)
+  def opening_move(board)
+    return unless @max_depth == MAX
+    return unless board.available_cells.size >= 8
+
+    center = Cell.new(1, 1)
+    return center if board.empty? center
+
+    [
+      Cell.new(0, 0),
+      Cell.new(2, 0),
+      Cell.new(0, 2),
+      Cell.new(2, 2)
+    ].find { |cell| board.empty? cell }
+  end
+
+  def score_after_move(board, cell, active, depth, alpha, beta)
     move_execute board, cell, active
-    move_score = minmax board, depth, !active
+    move_score = minmax board, depth, !active, alpha, beta
     move_undo board, cell
     move_score
   end

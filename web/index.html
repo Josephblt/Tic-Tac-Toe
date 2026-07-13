@@ -19,23 +19,101 @@
         overflow: hidden;
       }
 
-      #terminal {
+      #app {
+        display: grid;
+        gap: 12px;
+        justify-items: center;
         width: min(760px, 100vw);
+      }
+
+      #terminal {
+        width: 100%;
         height: min(420px, 100vh);
       }
 
       #terminal .xterm-viewport {
         overflow-y: hidden !important;
       }
+
+      #controls {
+        display: none;
+        gap: 8px;
+        grid-template-columns: repeat(3, 56px);
+        grid-template-rows: repeat(3, 44px) 14px 44px;
+      }
+
+      .touch-controls-enabled #terminal {
+        height: min(420px, calc(100vh - 244px));
+      }
+
+      .touch-controls-enabled #controls {
+        display: grid;
+      }
+
+      #controls button {
+        appearance: none;
+        background: #222;
+        border: 1px solid #555;
+        color: #f2f2f2;
+        font: 700 18px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        min-width: 0;
+        touch-action: manipulation;
+      }
+
+      #controls button:active {
+        background: #444;
+      }
+
+      #control-up {
+        grid-column: 2;
+      }
+
+      #control-left {
+        grid-column: 1;
+        grid-row: 2;
+      }
+
+      #control-action {
+        grid-column: 2;
+        grid-row: 2;
+      }
+
+      #control-right {
+        grid-column: 3;
+        grid-row: 2;
+      }
+
+      #control-back {
+        grid-column: 2;
+        grid-row: 5;
+      }
+
+      #control-down {
+        grid-column: 2;
+        grid-row: 3;
+      }
     </style>
   </head>
   <body>
-    <div id="terminal"></div>
+    <div id="app">
+      <div id="terminal"></div>
+      <div id="controls" aria-label="Game controls">
+        <button id="control-up" type="button" data-input="up" aria-label="Up">▲</button>
+        <button id="control-left" type="button" data-input="left" aria-label="Left">◀</button>
+        <button id="control-action" type="button" data-input="action" aria-label="Accept">↵</button>
+        <button id="control-right" type="button" data-input="right" aria-label="Right">▶</button>
+        <button id="control-back" type="button" data-input="back" aria-label="Back">⌫</button>
+        <button id="control-down" type="button" data-input="down" aria-label="Down">▼</button>
+      </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@xterm/xterm@5.5.0/lib/xterm.js"></script>
     <script type="module">
       import { DefaultRubyVM } from "https://cdn.jsdelivr.net/npm/@ruby/wasm-wasi@2.9.3-2.9.4/dist/browser/+esm";
 
+      const needsTouchControls =
+        window.matchMedia("(pointer: coarse)").matches ||
+        navigator.maxTouchPoints > 0;
       const term = new Terminal({
         cols: 41,
         rows: 19,
@@ -51,10 +129,29 @@
       });
 
       term.open(document.getElementById("terminal"));
-      term.focus();
+      if (!needsTouchControls) {
+        term.focus();
+      }
       term.writeln("Loading Ruby WASM Tic-Tac-Toe...");
 
       const keyQueue = [];
+      const touchKeys = {
+        action: "\r",
+        back: "\u007F",
+        down: "s",
+        left: "a",
+        right: "d",
+        up: "w"
+      };
+
+      document.body.classList.toggle("touch-controls-enabled", needsTouchControls);
+
+      document.querySelectorAll("#controls button").forEach((button) => {
+        button.addEventListener("pointerdown", (event) => {
+          event.preventDefault();
+          keyQueue.push(touchKeys[button.dataset.input]);
+        });
+      });
 
       term.onKey(({ domEvent }) => {
         const keys = {
@@ -119,7 +216,7 @@
       ];
 
       const fetchSource = async (path) => {
-        const response = await fetch(path);
+        const response = await fetch(path, { cache: "no-store" });
         if (!response.ok) {
           throw new Error(`${path}: ${response.status}`);
         }
