@@ -15,6 +15,15 @@ class GameState
 
   def update
     @input.update
-    @game.change_to_state GoodbyeState if input.cancel_pressed
+    return false unless input.cancel_pressed
+
+    @game.change_to_state cancel_state
+    true
+  end
+
+  private
+
+  def cancel_state
+    SetupState
   end
 end

@@ -11,7 +11,8 @@ class SetupState < GameState
   end
 
   def update
-    super
+    return if super
+
     update_selected_option
     update_controller1_option
     update_controller2_option
@@ -66,5 +67,9 @@ class SetupState < GameState
     return unless input.left_pressed || input.right_pressed
 
     @game.setup.change_symbol_options
+  end
+
+  def cancel_state
+    LogoState
   end
 end

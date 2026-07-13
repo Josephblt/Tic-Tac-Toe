@@ -20,7 +20,8 @@ class InGameState < GameState
   end
 
   def update
-    super
+    return if super
+
     update_controller
     update_selected_column
     update_selected_line

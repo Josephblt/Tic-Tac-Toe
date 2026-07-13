@@ -9,7 +9,8 @@ class ContinueState < GameState
   end
 
   def update
-    super
+    return if super
+
     update_selected_option
     update_action
   end

@@ -3,7 +3,14 @@
 # Logo state. Shows the name of the game and some tips.
 class LogoState < GameState
   def update
-    super
+    return if super
+
     @game.change_to_state SetupState if input.action_pressed
+  end
+
+  private
+
+  def cancel_state
+    GoodbyeState
   end
 end

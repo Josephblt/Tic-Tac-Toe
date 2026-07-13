@@ -109,4 +109,8 @@ class TextSetupRenderer < TextGameStateRenderer
     center_index = symbol_options.index '┃'
     draw_centered_by_index 9, center_index, symbol_options
   end
+
+  def back_tip
+    'BACK KEY TO LOGO'
+  end
 end

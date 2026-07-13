@@ -28,7 +28,7 @@ class TextGameStateRenderer < GameStateRenderer
   }.freeze
   TIP1 = '◀ ▲ ▼ ▶ KEYS TO CHANGE/SELECT'
   TIP2 = 'ENTER KEY TO ACCEPT'
-  TIP3 = 'BACK KEY TO EXIT'
+  TIP3 = 'BACK KEY TO SETUP'
   TITLE = 'SCHOLL\'S TIC-TAC-TOE!'
 
   def draw(game_state) end
@@ -66,10 +66,14 @@ class TextGameStateRenderer < GameStateRenderer
   def draw_tips
     draw_centered 12, TIP1
     draw_centered 13, TIP2
-    draw_centered 14, TIP3
+    draw_centered 14, back_tip
   end
 
   def draw_title(pos_y)
     draw_centered pos_y, TITLE
+  end
+
+  def back_tip
+    TIP3
   end
 end
