@@ -26,13 +26,13 @@ class BrowserKeyboardInput < Input
 
   def on_key_press(key)
     case key
-    when 'a', 'A'
+    when 'left'
       @left_pressed = true
-    when 's', 'S'
+    when 'down'
       @down_pressed = true
-    when 'd', 'D'
+    when 'right'
       @right_pressed = true
-    when 'w', 'W'
+    when 'up'
       @up_pressed = true
     when "\r", "\n"
       @action_pressed = true

@@ -11,6 +11,10 @@ class TerminalInput < Input
     @reader = TTY::Reader.new
     @reader.on(:keyreturn) { @action_pressed = true }
     @reader.on(:keybackspace) { @cancel_pressed = true }
+    @reader.on(:keyleft) { @left_pressed = true }
+    @reader.on(:keydown) { @down_pressed = true }
+    @reader.on(:keyright) { @right_pressed = true }
+    @reader.on(:keyup) { @up_pressed = true }
     @reader.on(:keypress) do |event|
       on_key_press event
     end
@@ -24,9 +28,9 @@ class TerminalInput < Input
   private
 
   def on_key_press(event)
-    @left_pressed = true if event.value == 'a'
-    @down_pressed = true if event.value == 's'
-    @right_pressed = true if event.value == 'd'
-    @up_pressed = true if event.value == 'w'
+    @left_pressed = true if event.value == "\e[D"
+    @down_pressed = true if event.value == "\e[B"
+    @right_pressed = true if event.value == "\e[C"
+    @up_pressed = true if event.value == "\e[A"
   end
 end
