@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Renderer for Game Bye State
-class TerminalGoodbyeRenderer < TerminalGameStateRenderer
+class TextGoodbyeRenderer < TextGameStateRenderer
   GOODBYE_MESSAGE = 'THANKS FOR PLAYING.'
 
   def draw(_game_state)

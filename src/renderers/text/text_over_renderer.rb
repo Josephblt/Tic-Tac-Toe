@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Renderer for Game Over State
-class TerminalOverRenderer < TerminalGameStateRenderer
+class TextOverRenderer < TextGameStateRenderer
   GAME_DRAW = 'DRAW GAME'
   MESSAGE_CONTINUE = 'PRESS ENTER TO CONTINUE...'
   MESSAGE_EXIT = 'OR BACK TO EXIT.'

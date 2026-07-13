@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Renderer for Game Logo State
-class TerminalInGameRenderer < TerminalGameStateRenderer
+class TextInGameRenderer < TextGameStateRenderer
   HIGHLIGHT = '*'
   INVALID = ' '
   PLAYER_1_TURN = '▶'

@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ruby WASM Tic-Tac-Toe</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xterm/xterm@5.5.0/css/xterm.css">
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        background: #111;
+      }
+
+      body {
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+      }
+
+      #terminal {
+        width: min(760px, 100vw);
+        height: min(420px, 100vh);
+      }
+
+      #terminal .xterm-viewport {
+        overflow-y: hidden !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="terminal"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@xterm/xterm@5.5.0/lib/xterm.js"></script>
+    <script type="module">
+      import { DefaultRubyVM } from "https://cdn.jsdelivr.net/npm/@ruby/wasm-wasi@2.9.3-2.9.4/dist/browser/+esm";
+
+      const term = new Terminal({
+        cols: 41,
+        rows: 19,
+        convertEol: true,
+        cursorBlink: false,
+        fontFamily: "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+        fontSize: 16,
+        theme: {
+          background: "#111111",
+          foreground: "#f2f2f2",
+          cursor: "#f2f2f2"
+        }
+      });
+
+      term.open(document.getElementById("terminal"));
+      term.focus();
+      term.writeln("Loading Ruby WASM Tic-Tac-Toe...");
+
+      const keyQueue = [];
+
+      term.onKey(({ domEvent }) => {
+        const keys = {
+          KeyA: "a",
+          KeyD: "d",
+          KeyS: "s",
+          KeyW: "w",
+          Enter: "\r",
+          Backspace: "\u007F"
+        };
+
+        const key = keys[domEvent.code];
+        if (key) {
+          keyQueue.push(key);
+          domEvent.preventDefault();
+        }
+      });
+
+      window.terminalBridge = {
+        readKey() {
+          return keyQueue.shift() || "";
+        },
+        write(text) {
+          term.write(String(text));
+        },
+        writeln(text) {
+          term.writeln(String(text));
+        }
+      };
+
+      const sourceFiles = [
+        "../src/symbol.rb",
+        "../src/options/ai_options.rb",
+        "../src/options/controller_options.rb",
+        "../src/options/symbols_options.rb",
+        "../src/options/setup.rb",
+        "../src/board.rb",
+        "../src/inputs/input.rb",
+        "../src/controllers/controller.rb",
+        "../src/controllers/human_controller.rb",
+        "../src/controllers/ai_controller.rb",
+        "../src/states/game_state.rb",
+        "../src/states/goodbye_state.rb",
+        "../src/states/continue_state.rb",
+        "../src/states/over_state.rb",
+        "../src/states/logo_state.rb",
+        "../src/states/setup_state.rb",
+        "../src/states/in_game_state.rb",
+        "../src/displays/game_state_renderer.rb",
+        "../src/renderers/text/text_game_state_renderer.rb",
+        "../src/renderers/text/text_continue_renderer.rb",
+        "../src/renderers/text/text_goodbye_renderer.rb",
+        "../src/renderers/text/text_in_game_renderer.rb",
+        "../src/renderers/text/text_logo_renderer.rb",
+        "../src/renderers/text/text_over_renderer.rb",
+        "../src/renderers/text/text_setup_renderer.rb",
+        "../src/displays/display.rb",
+        "../src/game.rb",
+        "./browser_input.rb",
+        "./browser_terminal_display.rb",
+        "./wasm_entrypoint.rb"
+      ];
+
+      const fetchSource = async (path) => {
+        const response = await fetch(path);
+        if (!response.ok) {
+          throw new Error(`${path}: ${response.status}`);
+        }
+        return await response.text();
+      };
+
+      try {
+        const wasmResponse = await fetch("https://cdn.jsdelivr.net/npm/@ruby/3.3-wasm-wasi@2.9.3-2.9.4/dist/ruby+stdlib.wasm");
+        const wasmModule = await WebAssembly.compileStreaming(wasmResponse);
+        const { vm } = await DefaultRubyVM(wasmModule);
+
+        vm.eval(`
+          module Kernel
+            def require_relative(_path)
+              true
+            end
+          end
+        `);
+
+        for (const path of sourceFiles) {
+          vm.eval(await fetchSource(path));
+        }
+      } catch (error) {
+        term.writeln("");
+        term.writeln(`Ruby WASM Tic-Tac-Toe failed: ${error.message}`);
+        console.error(error);
+      }
+    </script>
+  </body>
+</html>

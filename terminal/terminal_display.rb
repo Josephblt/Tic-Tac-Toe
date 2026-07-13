@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 require 'tty-cursor'
-require_relative '../display'
-require_relative 'terminal_game_state_renderer'
-require_relative 'terminal_continue_renderer'
-require_relative 'terminal_goodbye_renderer'
-require_relative 'terminal_in_game_renderer'
-require_relative 'terminal_logo_renderer'
-require_relative 'terminal_setup_renderer'
-require_relative 'terminal_over_renderer'
+require_relative '../src/displays/display'
+require_relative '../src/renderers/text/text_game_state_renderer'
+require_relative '../src/renderers/text/text_continue_renderer'
+require_relative '../src/renderers/text/text_goodbye_renderer'
+require_relative '../src/renderers/text/text_in_game_renderer'
+require_relative '../src/renderers/text/text_logo_renderer'
+require_relative '../src/renderers/text/text_setup_renderer'
+require_relative '../src/renderers/text/text_over_renderer'
 
 # Renderer for terminal.
 class TerminalDisplay < Display
@@ -26,27 +26,27 @@ class TerminalDisplay < Display
   end
 
   def create_continue_renderer
-    TerminalContinueRenderer.new(self)
+    TextContinueRenderer.new(self)
   end
 
   def create_goodbye_renderer
-    TerminalGoodbyeRenderer.new(self)
+    TextGoodbyeRenderer.new(self)
   end
 
   def create_in_game_renderer
-    TerminalInGameRenderer.new(self)
+    TextInGameRenderer.new(self)
   end
 
   def create_logo_renderer
-    TerminalLogoRenderer.new(self)
+    TextLogoRenderer.new(self)
   end
 
   def create_over_renderer
-    TerminalOverRenderer.new(self)
+    TextOverRenderer.new(self)
   end
 
   def create_setup_renderer
-    TerminalSetupRenderer.new(self)
+    TextSetupRenderer.new(self)
   end
 
   def draw_text(pos_x, pos_y, text)

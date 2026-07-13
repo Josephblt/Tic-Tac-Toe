@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'tty-reader'
-require_relative 'input'
+require_relative '../src/inputs/input'
 
 # Non-interrupting key input detector for terminal.
 class TerminalInput < Input

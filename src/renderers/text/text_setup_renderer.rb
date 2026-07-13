@@ -5,7 +5,7 @@ require_relative '../../options/symbols_options'
 require_relative '../../options/controller_options'
 
 # Renderer for Game Logo State
-class TerminalSetupRenderer < TerminalGameStateRenderer
+class TextSetupRenderer < TextGameStateRenderer
   SUBTITLE = 'MATCH SETUP'
   SELECTOR_LEFT = '◀'
   SELECTOR_RIGHT = '▶'

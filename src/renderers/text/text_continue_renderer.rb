@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Renderer for Game Continue State
-class TerminalContinueRenderer < TerminalGameStateRenderer
+class TextContinueRenderer < TextGameStateRenderer
   SUBTITLE = 'CONTINUE?'
   OPTION1 = 'RESTART MATCH'
   OPTION2 = 'BACK TO MATCH RESULT'

@@ -3,6 +3,6 @@
 # Goodbye state. Shows a nice goodbye message.
 class GoodbyeState < GameState
   def update
-    @game.quit
+    @game.stop
   end
 end

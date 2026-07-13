@@ -12,6 +12,7 @@ require_relative 'states/in_game_state'
 # Simple implementation of the famous Tic-Tac-Toe game.
 class Game
   attr_reader :board,
+              :running,
               :setup
 
   def initialize(display, input)
@@ -28,16 +29,29 @@ class Game
     @current_game_state&.enter
   end
 
-  def play
+  def start
     change_to_state LogoState
     @running = true
+  end
 
-    while @running
-      @current_game_state.update
-      @display.renderers[@current_game_state.class].draw(@current_game_state)
-      @display.refresh
-    end
+  def update
+    return false unless @running
 
+    @current_game_state.update
+    @display.renderers[@current_game_state.class].draw(@current_game_state)
+    @display.refresh
+    @running
+  end
+
+  def running?
+    @running
+  end
+
+  def stop
+    @running = false
+  end
+
+  def finalize
     @display.finalize
   end
 
@@ -47,10 +61,6 @@ class Game
              else
                Board.new(Symbol::NOUGHT, Symbol::CROSS)
              end
-  end
-
-  def quit
-    @running = false
   end
 
   private

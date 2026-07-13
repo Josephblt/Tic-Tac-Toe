@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Renderer for Game Logo State
-class TerminalLogoRenderer < TerminalGameStateRenderer
+class TextLogoRenderer < TextGameStateRenderer
   MESSAGE_ENTER = 'PRESS ENTER TO START...'
   MESSAGE_EXIT = 'OR BACK TO EXIT.'
 
