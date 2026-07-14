@@ -5,15 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ruby WASM Tic-Tac-Toe</title>
     <script>
-      const hasTouch = navigator.maxTouchPoints > 0;
-      const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
-      const narrowScreen = window.matchMedia("(max-width: 700px)").matches;
-      const target = hasTouch || coarsePointer || narrowScreen ? "mobile/" : "pc/";
-
-      window.location.replace(target);
+      const isTouchDevice = window.matchMedia("(pointer: coarse)").matches || navigator.maxTouchPoints > 0;
+      window.location.replace(isTouchDevice ? "./mobile_index.html" : "./pc_index.html");
     </script>
   </head>
   <body>
-    <p>Loading Tic-Tac-Toe...</p>
+    <noscript>
+      <a href="./pc_index.html">PC</a>
+      <a href="./mobile_index.html">Mobile</a>
+    </noscript>
   </body>
 </html>
