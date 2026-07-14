@@ -1,37 +1,6 @@
 import { DefaultRubyVM } from "https://cdn.jsdelivr.net/npm/@ruby/wasm-wasi@2.9.3-2.9.4/dist/browser/+esm";
 
-const sourceFiles = [
-  "../symbol.rb",
-  "../options/ai_options.rb",
-  "../options/controller_options.rb",
-  "../options/symbols_options.rb",
-  "../options/setup.rb",
-  "../board.rb",
-  "../inputs/input.rb",
-  "../controllers/controller.rb",
-  "../controllers/human_controller.rb",
-  "../controllers/ai_controller.rb",
-  "../states/game_state.rb",
-  "../states/goodbye_state.rb",
-  "../states/continue_state.rb",
-  "../states/over_state.rb",
-  "../states/logo_state.rb",
-  "../states/setup_state.rb",
-  "../states/in_game_state.rb",
-  "../displays/game_state_renderer.rb",
-  "../renderers/base_renderer.rb",
-  "../renderers/continue_renderer.rb",
-  "../renderers/goodbye_renderer.rb",
-  "../renderers/in_game_renderer.rb",
-  "../renderers/logo_renderer.rb",
-  "../renderers/over_renderer.rb",
-  "../renderers/setup_renderer.rb",
-  "../displays/display.rb",
-  "../game.rb",
-  "../inputs/web_input.rb",
-  "../displays/web_terminal_display.rb",
-  "../entrypoints/web_entrypoint.rb"
-];
+const appSourcePath = "./app.rb";
 
 const baseTerminalOptions = {
   cols: 41,
@@ -100,17 +69,7 @@ export async function startWebGame({
     const wasmModule = await WebAssembly.compileStreaming(wasmResponse);
     const { vm } = await DefaultRubyVM(wasmModule);
 
-    vm.eval(`
-      module Kernel
-        def require_relative(_path)
-          true
-        end
-      end
-    `);
-
-    for (const path of sourceFiles) {
-      vm.eval(await fetchSource(path));
-    }
+    vm.eval(await fetchSource(appSourcePath));
     vm.eval("WebEntrypoint.start(WebInput)");
   } catch (error) {
     term.writeln("");

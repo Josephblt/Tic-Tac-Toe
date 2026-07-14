@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'js'
+require_relative 'input'
 
 # Web input adapter. The JavaScript side normalizes keyboard and button
 # events into the same queue values before Ruby reads them.

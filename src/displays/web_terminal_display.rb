@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'js'
+require_relative 'display'
 
 # Web display adapter. It reuses the shared text state renderers but
 # writes complete frames into xterm.js instead of using tty-cursor.

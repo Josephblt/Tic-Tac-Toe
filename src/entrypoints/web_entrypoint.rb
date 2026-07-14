@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 require 'js'
+require_relative '../game'
+require_relative '../inputs/web_input'
+require_relative '../displays/web_terminal_display'
 
 class WebEntrypoint
   TICK_MS = 120

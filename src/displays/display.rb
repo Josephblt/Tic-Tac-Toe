@@ -7,6 +7,13 @@ require_relative '../states/over_state'
 require_relative '../states/logo_state'
 require_relative '../states/setup_state'
 require_relative '../states/in_game_state'
+require_relative '../renderers/base_renderer'
+require_relative '../renderers/continue_renderer'
+require_relative '../renderers/goodbye_renderer'
+require_relative '../renderers/in_game_renderer'
+require_relative '../renderers/logo_renderer'
+require_relative '../renderers/setup_renderer'
+require_relative '../renderers/over_renderer'
 
 # Base class for screen renderers.
 class Display
