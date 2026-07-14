@@ -31,7 +31,7 @@ const sourceFiles = [
   "../browser_input.rb",
   "../browser_terminal_display.rb",
   "../browser_game_loop.rb",
-  "./wasm_entrypoint.rb"
+  "../wasm_entrypoint.rb"
 ];
 
 const baseTerminalOptions = {
