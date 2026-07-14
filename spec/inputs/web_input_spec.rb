@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-$LOAD_PATH.unshift(File.expand_path('../support', __dir__))
-
 require 'rspec'
+
+$LOADED_FEATURES << 'js.rb' unless $LOADED_FEATURES.include?('js.rb')
+
 require './src/inputs/web_input'
 
 class FakeWebInputBridge
