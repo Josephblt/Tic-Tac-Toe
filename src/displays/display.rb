@@ -18,9 +18,25 @@ class Display
     @width = width
     @height = height
     initialize_renderers
+    reset_display
   end
 
-  def refresh; end
+  def draw_text(pos_x, pos_y, text)
+    text.each_char.with_index do |char, index|
+      x = pos_x + index
+      next if x.negative? || x >= @width
+      next if pos_y.negative? || pos_y >= @height
+
+      @display_matrix[x][pos_y] = char
+    end
+  end
+
+  def refresh
+    draw_borders
+    write_frame
+    after_refresh
+    reset_display
+  end
 
   private
 
@@ -61,4 +77,18 @@ class Display
       @display_matrix[@width - 1][y] = '║'
     end
   end
+
+  def after_refresh; end
+
+  def frame_text
+    (0..@height - 1).map do |y|
+      (0..@width - 1).map { |x| @display_matrix[x][y] }.join
+    end.join("\r\n")
+  end
+
+  def reset_display
+    @display_matrix = Array.new(@width) { Array.new(@height) { ' ' } }
+  end
+
+  def write_frame; end
 end

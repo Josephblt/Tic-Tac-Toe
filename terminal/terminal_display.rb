@@ -17,7 +17,7 @@ class TerminalDisplay < Display
     @cursor = TTY::Cursor
     print @cursor.hide
     print @cursor.clear_screen
-    reset_display_string last_display_string: true
+    reset_last_display
     copy_display
   end
 
@@ -25,24 +25,13 @@ class TerminalDisplay < Display
     print @cursor.show
   end
 
-  def draw_text(pos_x, pos_y, text)
-    text = text.split ''
-    i = 0
-    text.each do |char|
-      @display_matrix[pos_x + i][pos_y] = char
-      i += 1
-    end
-  end
+  private
 
-  def refresh
-    draw
+  def after_refresh
     copy_display
-    reset_display_string
     print @cursor.move_to 0, @height
     print @cursor.clear_line
   end
-
-  private
 
   def copy_display
     (0..@height - 1).each do |y|
@@ -52,8 +41,7 @@ class TerminalDisplay < Display
     end
   end
 
-  def draw
-    draw_borders
+  def write_frame
     (0..@height - 1).each do |y|
       (0..@width - 1).each do |x|
         if @display_matrix[x][y] != @last_display_matrix[x][y]
@@ -64,8 +52,7 @@ class TerminalDisplay < Display
     end
   end
 
-  def reset_display_string(last_display_string: false)
-    @display_matrix = Array.new(@width) { Array.new(@height) { ' ' } }
-    @last_display_matrix = Array.new(@width) { Array.new(@height) { ' ' } } if last_display_string
+  def reset_last_display
+    @last_display_matrix = Array.new(@width) { Array.new(@height) { ' ' } }
   end
 end
