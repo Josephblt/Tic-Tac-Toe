@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'tty-cursor'
-require_relative '../displays/display'
+require_relative 'display'
 require_relative '../renderers/text/text_game_state_renderer'
 require_relative '../renderers/text/text_continue_renderer'
 require_relative '../renderers/text/text_goodbye_renderer'

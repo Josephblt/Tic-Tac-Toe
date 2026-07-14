@@ -28,8 +28,8 @@ const sourceFiles = [
   "../src/renderers/text/text_setup_renderer.rb",
   "../src/displays/display.rb",
   "../src/game.rb",
-  "../src/web/web_input.rb",
-  "../src/web/web_terminal_display.rb",
+  "../src/inputs/web_input.rb",
+  "../src/displays/web_terminal_display.rb",
   "../src/entrypoints/web_entrypoint.rb"
 ];
 
