@@ -4,15 +4,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ruby WASM Tic-Tac-Toe</title>
-    <script>
-      const isTouchDevice = window.matchMedia("(pointer: coarse)").matches || navigator.maxTouchPoints > 0;
-      window.location.replace(isTouchDevice ? "./mobile_index.html" : "./pc_index.html");
-    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xterm/xterm@5.5.0/css/xterm.css">
+    <link rel="stylesheet" href="./style.css">
   </head>
-  <body>
-    <noscript>
-      <a href="./pc_index.html">PC</a>
-      <a href="./mobile_index.html">Mobile</a>
-    </noscript>
+  <body data-mode="pc">
+    <div id="app">
+      <div id="terminal"></div>
+      <div id="controls" aria-label="Game controls" hidden>
+        <button id="control-up" type="button" data-input="up" aria-label="Up">▲</button>
+        <button id="control-left" type="button" data-input="left" aria-label="Left">◀</button>
+        <button id="control-action" type="button" data-input="action" aria-label="Accept">↵</button>
+        <button id="control-right" type="button" data-input="right" aria-label="Right">▶</button>
+        <button id="control-back" type="button" data-input="back" aria-label="Back">⌫</button>
+        <button id="control-down" type="button" data-input="down" aria-label="Down">▼</button>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@xterm/xterm@5.5.0/lib/xterm.js"></script>
+    <script type="module" src="./web.js"></script>
   </body>
 </html>
