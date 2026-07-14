@@ -2,13 +2,13 @@
 
 require 'tty-cursor'
 require_relative 'display'
-require_relative '../renderers/text/text_game_state_renderer'
-require_relative '../renderers/text/text_continue_renderer'
-require_relative '../renderers/text/text_goodbye_renderer'
-require_relative '../renderers/text/text_in_game_renderer'
-require_relative '../renderers/text/text_logo_renderer'
-require_relative '../renderers/text/text_setup_renderer'
-require_relative '../renderers/text/text_over_renderer'
+require_relative '../renderers/base_renderer'
+require_relative '../renderers/continue_renderer'
+require_relative '../renderers/goodbye_renderer'
+require_relative '../renderers/in_game_renderer'
+require_relative '../renderers/logo_renderer'
+require_relative '../renderers/setup_renderer'
+require_relative '../renderers/over_renderer'
 
 # Renderer for terminal.
 class TerminalDisplay < Display

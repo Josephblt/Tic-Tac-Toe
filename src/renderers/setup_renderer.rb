@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative '../../options/ai_options'
-require_relative '../../options/symbols_options'
-require_relative '../../options/controller_options'
+require_relative '../options/ai_options'
+require_relative '../options/symbols_options'
+require_relative '../options/controller_options'
 
-# Renderer for Game Logo State
-class TextSetupRenderer < TextGameStateRenderer
+# Renderer for Game Setup State
+class SetupRenderer < BaseRenderer
   SUBTITLE = 'MATCH SETUP'
   SELECTOR_LEFT = '◀'
   SELECTOR_RIGHT = '▶'

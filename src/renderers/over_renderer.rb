@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Renderer for Game Over State
-class TextOverRenderer < TextGameStateRenderer
+class OverRenderer < BaseRenderer
   GAME_DRAW = 'DRAW GAME'
   MESSAGE_CONTINUE = 'PRESS ENTER TO CONTINUE...'
   MESSAGE_EXIT = 'BACK KEY TO SETUP'

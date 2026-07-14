@@ -42,12 +42,12 @@ class Display
 
   def initialize_renderers
     @renderers = {
-      ContinueState => TextContinueRenderer.new(self),
-      GoodbyeState => TextGoodbyeRenderer.new(self),
-      InGameState => TextInGameRenderer.new(self),
-      LogoState => TextLogoRenderer.new(self),
-      OverState => TextOverRenderer.new(self),
-      SetupState => TextSetupRenderer.new(self)
+      ContinueState => ContinueRenderer.new(self),
+      GoodbyeState => GoodbyeRenderer.new(self),
+      InGameState => InGameRenderer.new(self),
+      LogoState => LogoRenderer.new(self),
+      OverState => OverRenderer.new(self),
+      SetupState => SetupRenderer.new(self)
     }
   end
 

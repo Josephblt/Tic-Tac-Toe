@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require_relative '../../displays/game_state_renderer'
-require_relative '../../options/ai_options'
-require_relative '../../options/controller_options'
-require_relative '../../symbol'
+require_relative '../displays/game_state_renderer'
+require_relative '../options/ai_options'
+require_relative '../options/controller_options'
+require_relative '../symbol'
 
-# Base class for text game state renderers.
-class TextGameStateRenderer < GameStateRenderer
+# Base class for game state renderers.
+class BaseRenderer < GameStateRenderer
   AI_OPTIONS = {
     AIOptions::EASY => 'EASY',
     AIOptions::HARD => 'HARD',
