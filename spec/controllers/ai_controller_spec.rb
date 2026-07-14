@@ -79,6 +79,7 @@ describe ImpossibleAIController do
     it 'populates the score cache' do
       board = Board.new(Symbol::CROSS, Symbol::NOUGHT)
       board.convert_player1 Cell.new(0, 0)
+      board.convert_player2 Cell.new(1, 1)
 
       controller = ImpossibleAIController.new FakeAIInGameState.new(board)
       controller.activate
