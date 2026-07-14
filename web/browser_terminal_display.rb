@@ -16,30 +16,6 @@ class BrowserTerminalDisplay < Display
     @bridge.call(:write, "\e[?25h\r\n")
   end
 
-  def create_continue_renderer
-    TextContinueRenderer.new(self)
-  end
-
-  def create_goodbye_renderer
-    TextGoodbyeRenderer.new(self)
-  end
-
-  def create_in_game_renderer
-    TextInGameRenderer.new(self)
-  end
-
-  def create_logo_renderer
-    TextLogoRenderer.new(self)
-  end
-
-  def create_over_renderer
-    TextOverRenderer.new(self)
-  end
-
-  def create_setup_renderer
-    TextSetupRenderer.new(self)
-  end
-
   def draw_text(pos_x, pos_y, text)
     text.each_char.with_index do |char, index|
       x = pos_x + index

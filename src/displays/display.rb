@@ -20,29 +20,18 @@ class Display
     initialize_renderers
   end
 
-  def create_continue_renderer; end
-
-  def create_goodbye_renderer; end
-
-  def create_in_game_renderer; end
-
-  def create_logo_renderer; end
-
-  def create_over_renderer; end
-
-  def create_setup_renderer; end
-
   def refresh; end
 
   private
 
   def initialize_renderers
-    @renderers = {}
-    @renderers[ContinueState] = create_continue_renderer
-    @renderers[GoodbyeState] = create_goodbye_renderer
-    @renderers[InGameState] = create_in_game_renderer
-    @renderers[LogoState] = create_logo_renderer
-    @renderers[OverState] = create_over_renderer
-    @renderers[SetupState] = create_setup_renderer
+    @renderers = {
+      ContinueState => TextContinueRenderer.new(self),
+      GoodbyeState => TextGoodbyeRenderer.new(self),
+      InGameState => TextInGameRenderer.new(self),
+      LogoState => TextLogoRenderer.new(self),
+      OverState => TextOverRenderer.new(self),
+      SetupState => TextSetupRenderer.new(self)
+    }
   end
 end
