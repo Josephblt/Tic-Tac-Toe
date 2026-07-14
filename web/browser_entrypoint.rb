@@ -2,7 +2,7 @@
 
 require 'js'
 
-class BrowserGameLoop
+class BrowserEntrypoint
   TICK_MS = 120
 
   def self.start(input_class)
