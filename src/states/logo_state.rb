@@ -11,6 +11,6 @@ class LogoState < GameState
   private
 
   def cancel_state
-    GoodbyeState
+    game.exit_allowed? ? GoodbyeState : LogoState
   end
 end

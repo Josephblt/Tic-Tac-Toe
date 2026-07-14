@@ -11,16 +11,25 @@ require_relative 'states/in_game_state'
 
 # Simple implementation of the famous Tic-Tac-Toe game.
 class Game
+  LOOP_MODE_CONTINUOUS = :continuous
+  LOOP_MODE_EXITABLE = :exitable
+
   attr_reader :board,
+              :loop_mode,
               :running,
               :setup
 
-  def initialize(display, input)
+  def initialize(display, input, loop_mode: LOOP_MODE_EXITABLE)
     @display = display
     @input = input
+    @loop_mode = loop_mode
     @running = false
     @setup = Setup.new
     initialize_game_states
+  end
+
+  def exit_allowed?
+    @loop_mode == LOOP_MODE_EXITABLE
   end
 
   def change_to_state(state)

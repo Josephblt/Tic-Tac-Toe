@@ -10,12 +10,12 @@ class TextLogoRenderer < TextGameStateRenderer
     @blink = 0
   end
 
-  def draw(_game_state)
+  def draw(game_state)
     @blink += 1
     @blink = 0 if @blink > 10
     draw_title 7
     draw_message_enter
-    draw_message_exit
+    draw_message_exit(game_state)
   end
 
   private
@@ -26,8 +26,9 @@ class TextLogoRenderer < TextGameStateRenderer
     draw_centered 9, MESSAGE_ENTER
   end
 
-  def draw_message_exit
+  def draw_message_exit(game_state)
     return if @blink > 5
+    return unless game_state.game.exit_allowed?
 
     draw_centered 10, MESSAGE_EXIT
   end
