@@ -15,4 +15,4 @@ class TerminalEntrypoint
   end
 end
 
-TerminalEntrypoint.start
+TerminalEntrypoint.start if $PROGRAM_NAME == __FILE__
