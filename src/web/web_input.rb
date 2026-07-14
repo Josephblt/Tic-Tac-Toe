@@ -2,9 +2,9 @@
 
 require 'js'
 
-# Browser input adapter. The JavaScript side normalizes keyboard and button
+# Web input adapter. The JavaScript side normalizes keyboard and button
 # events into the same queue values before Ruby reads them.
-class BrowserInput < Input
+class WebInput < Input
   def initialize(bridge)
     super()
     @bridge = bridge

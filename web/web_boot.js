@@ -28,9 +28,9 @@ const sourceFiles = [
   "../src/renderers/text/text_setup_renderer.rb",
   "../src/displays/display.rb",
   "../src/game.rb",
-  "../src/web/browser_input.rb",
-  "../src/web/browser_terminal_display.rb",
-  "../src/entrypoints/browser_entrypoint.rb"
+  "../src/web/web_input.rb",
+  "../src/web/web_terminal_display.rb",
+  "../src/entrypoints/web_entrypoint.rb"
 ];
 
 const baseTerminalOptions = {
@@ -62,7 +62,7 @@ const terminalOptions = (options) => ({
   }
 });
 
-export async function startBrowserGame({
+export async function startWebGame({
   configureInput,
   focus = false,
   terminal = {},
@@ -111,7 +111,7 @@ export async function startBrowserGame({
     for (const path of sourceFiles) {
       vm.eval(await fetchSource(path));
     }
-    vm.eval("BrowserEntrypoint.start(BrowserInput)");
+    vm.eval("WebEntrypoint.start(WebInput)");
   } catch (error) {
     term.writeln("");
     term.writeln(`Ruby WASM Tic-Tac-Toe failed: ${error.message}`);

@@ -2,12 +2,12 @@
 
 require 'js'
 
-class BrowserEntrypoint
+class WebEntrypoint
   TICK_MS = 120
 
   def self.start(input_class)
     bridge = JS.global[:terminalBridge]
-    display = BrowserTerminalDisplay.new(bridge)
+    display = WebTerminalDisplay.new(bridge)
     input = input_class.new(bridge)
     game = Game.new(display, input, loop_mode: Game::LOOP_MODE_CONTINUOUS)
     game.start

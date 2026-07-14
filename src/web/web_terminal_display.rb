@@ -2,9 +2,9 @@
 
 require 'js'
 
-# Browser-side display adapter. It reuses the shared text state renderers but
+# Web display adapter. It reuses the shared text state renderers but
 # writes complete frames into xterm.js instead of using tty-cursor.
-class BrowserTerminalDisplay < Display
+class WebTerminalDisplay < Display
   def initialize(bridge)
     @bridge = bridge
     super(39, 17)
