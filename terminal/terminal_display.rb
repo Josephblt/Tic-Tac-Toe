@@ -64,33 +64,6 @@ class TerminalDisplay < Display
     end
   end
 
-  def draw_borders
-    draw_corner_borders
-    draw_horizontal_borders
-    draw_vertical_borders
-  end
-
-  def draw_corner_borders
-    @display_matrix[0][0] = '╔'
-    @display_matrix[@width - 1][0] = '╗'
-    @display_matrix[0][@height - 1] = '╚'
-    @display_matrix[@width - 1][@height - 1] = '╝'
-  end
-
-  def draw_horizontal_borders
-    (1..@width - 2).each do |x|
-      @display_matrix[x][0] = '═'
-      @display_matrix[x][@height - 1] = '═'
-    end
-  end
-
-  def draw_vertical_borders
-    (1..@height - 2).each do |y|
-      @display_matrix[0][y] = '║'
-      @display_matrix[@width - 1][y] = '║'
-    end
-  end
-
   def reset_display_string(last_display_string: false)
     @display_matrix = Array.new(@width) { Array.new(@height) { ' ' } }
     @last_display_matrix = Array.new(@width) { Array.new(@height) { ' ' } } if last_display_string

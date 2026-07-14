@@ -34,23 +34,6 @@ class BrowserTerminalDisplay < Display
 
   private
 
-  def draw_borders
-    @display_matrix[0][0] = '╔'
-    @display_matrix[@width - 1][0] = '╗'
-    @display_matrix[0][@height - 1] = '╚'
-    @display_matrix[@width - 1][@height - 1] = '╝'
-
-    (1..@width - 2).each do |x|
-      @display_matrix[x][0] = '═'
-      @display_matrix[x][@height - 1] = '═'
-    end
-
-    (1..@height - 2).each do |y|
-      @display_matrix[0][y] = '║'
-      @display_matrix[@width - 1][y] = '║'
-    end
-  end
-
   def frame
     (0..@height - 1).map do |y|
       (0..@width - 1).map { |x| @display_matrix[x][y] }.join
