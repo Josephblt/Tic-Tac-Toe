@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative '../src/game'
-require_relative 'terminal_display'
-require_relative 'terminal_input'
+require_relative '../game'
+require_relative '../terminal/terminal_display'
+require_relative '../terminal/terminal_input'
 
 class TerminalEntrypoint
   def self.start

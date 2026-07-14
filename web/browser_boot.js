@@ -28,9 +28,9 @@ const sourceFiles = [
   "../src/renderers/text/text_setup_renderer.rb",
   "../src/displays/display.rb",
   "../src/game.rb",
-  "./browser_input.rb",
-  "./browser_terminal_display.rb",
-  "./browser_entrypoint.rb"
+  "../src/web/browser_input.rb",
+  "../src/web/browser_terminal_display.rb",
+  "../src/entrypoints/browser_entrypoint.rb"
 ];
 
 const baseTerminalOptions = {

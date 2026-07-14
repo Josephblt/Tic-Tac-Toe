@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 require 'tty-cursor'
-require_relative '../src/displays/display'
-require_relative '../src/renderers/text/text_game_state_renderer'
-require_relative '../src/renderers/text/text_continue_renderer'
-require_relative '../src/renderers/text/text_goodbye_renderer'
-require_relative '../src/renderers/text/text_in_game_renderer'
-require_relative '../src/renderers/text/text_logo_renderer'
-require_relative '../src/renderers/text/text_setup_renderer'
-require_relative '../src/renderers/text/text_over_renderer'
+require_relative '../displays/display'
+require_relative '../renderers/text/text_game_state_renderer'
+require_relative '../renderers/text/text_continue_renderer'
+require_relative '../renderers/text/text_goodbye_renderer'
+require_relative '../renderers/text/text_in_game_renderer'
+require_relative '../renderers/text/text_logo_renderer'
+require_relative '../renderers/text/text_setup_renderer'
+require_relative '../renderers/text/text_over_renderer'
 
 # Renderer for terminal.
 class TerminalDisplay < Display

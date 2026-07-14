@@ -8,7 +8,6 @@ class BrowserTerminalDisplay < Display
   def initialize(bridge)
     @bridge = bridge
     super(39, 17)
-    reset_display
     @bridge.call(:write, "\e[?25l\e[2J")
   end
 
