@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-BrowserGameLoop.start(BrowserKeyboardInput)
+BrowserGameLoop.start(BrowserInput)

@@ -2,9 +2,9 @@
 
 require 'js'
 
-# Browser PC input adapter. It preserves the existing Input contract while
-# receiving keyboard events from xterm.js through a small JavaScript queue.
-class BrowserKeyboardInput < Input
+# Browser input adapter. The JavaScript side normalizes keyboard and button
+# events into the same queue values before Ruby reads them.
+class BrowserInput < Input
   def initialize(bridge)
     super()
     @bridge = bridge
