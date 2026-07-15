@@ -88,6 +88,10 @@ body[data-mode="mobile"] #terminal .xterm-viewport {
   overflow: hidden !important;
 }
 
+body[data-mode="mobile"] #terminal .xterm-rows > div {
+  text-align: center;
+}
+
 #controls[hidden] {
   display: none;
 }
