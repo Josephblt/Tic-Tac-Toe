@@ -14,15 +14,6 @@ const gameKeys = {
   up: "up"
 };
 
-const keyboardKeys = {
-  ArrowLeft: gameKeys.left,
-  ArrowRight: gameKeys.right,
-  ArrowDown: gameKeys.down,
-  ArrowUp: gameKeys.up,
-  Enter: gameKeys.action,
-  Backspace: gameKeys.back
-};
-
 const appendLink = (attributes) => {
   const link = document.createElement("link");
   Object.entries(attributes).forEach(([name, value]) => {
@@ -49,7 +40,11 @@ const loadMobileFont = () => {
 
 const configureKeyboardInput = ({ keyQueue, term }) => {
   term.onKey(({ domEvent }) => {
-    const key = keyboardKeys[domEvent.code];
+    const direction = domEvent.code.replace("Arrow", "").toLowerCase();
+    const action = domEvent.code === "Enter" ? "action" : direction;
+    const input = domEvent.code === "Backspace" ? "back" : action;
+    const key = gameKeys[input];
+
     if (key) {
       keyQueue.push(key);
       domEvent.preventDefault();
