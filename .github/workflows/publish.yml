@@ -64,9 +64,9 @@ jobs:
           sudo mv butler /usr/local/bin/butler
           butler -V
 
-      - name: Upload release package to itch.io
+      - name: Upload web build to itch.io
         env:
           BUTLER_API_KEY: ${{ secrets.ITCH_API_KEY }}
           ITCH_TARGET: josephblt-games/tic-tac-toe:web
           TAG_NAME: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
-        run: butler push "dist/tic-tac-toe-web-${TAG_NAME}.zip" "$ITCH_TARGET" --userversion "$TAG_NAME"
+        run: butler push dist/web "$ITCH_TARGET" --userversion "$TAG_NAME"
