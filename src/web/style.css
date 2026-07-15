@@ -43,7 +43,7 @@ body[data-mode="mobile"] #app {
   background: #111;
   color: #f2f2f2;
   display: grid;
-  font-family: "Noto Sans Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-family: "Fira Code", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 13px;
   place-items: center;
   width: 100%;
@@ -95,7 +95,7 @@ body[data-mode="mobile"] #terminal .xterm-viewport {
   border: 1px solid #555;
   background: #222;
   color: #f2f2f2;
-  font: 700 18px "Noto Sans Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font: 700 18px "Fira Code", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   touch-action: manipulation;
 }
 

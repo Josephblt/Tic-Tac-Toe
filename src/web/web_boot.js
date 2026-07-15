@@ -22,30 +22,6 @@ const terminalOptions = {
   cursorBlink: false
 };
 
-const appendLink = (attributes) => {
-  const link = document.createElement("link");
-  Object.entries(attributes).forEach(([name, value]) => {
-    link.setAttribute(name, value);
-  });
-  document.head.appendChild(link);
-};
-
-const loadMobileFont = () => {
-  appendLink({
-    href: "https://fonts.googleapis.com",
-    rel: "preconnect"
-  });
-  appendLink({
-    crossorigin: "",
-    href: "https://fonts.gstatic.com",
-    rel: "preconnect"
-  });
-  appendLink({
-    href: "https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@400;700&display=swap",
-    rel: "stylesheet"
-  });
-};
-
 const fetchSource = async (path) => {
   const response = await fetch(path, { cache: "no-store" });
   if (!response.ok) {
@@ -116,5 +92,4 @@ const startWebGame = async () => {
   }
 };
 
-loadMobileFont();
 await startWebGame();
