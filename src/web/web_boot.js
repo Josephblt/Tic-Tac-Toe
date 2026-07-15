@@ -15,11 +15,13 @@ const gameKeys = {
   Backspace: "\u007F"
 };
 
-const baseTerminalOptions = {
+const terminalOptions = {
   cols: 41,
   rows: 19,
   convertEol: true,
   cursorBlink: false,
+  fontFamily: "'Noto Sans Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+  fontSize: 13,
   theme: {
     background: "#111111",
     foreground: "#f2f2f2",
@@ -59,15 +61,6 @@ const fetchSource = async (path) => {
   return await response.text();
 };
 
-const terminalOptions = (options) => ({
-  ...baseTerminalOptions,
-  ...options,
-  theme: {
-    ...baseTerminalOptions.theme,
-    ...(options.theme || {})
-  }
-});
-
 const configureKeyboardInput = ({ keyQueue, term }) => {
   term.onKey(({ domEvent }) => {
     const key = gameKeys[domEvent.code];
@@ -90,31 +83,21 @@ const configureTouchInput = ({ keyQueue }) => {
   });
 };
 
-const sharedMode = {
-  terminal: {
-    fontFamily: "'Noto Sans Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-    fontSize: 13
-  }
-};
-
 const modes = {
   mobile: {
-    ...sharedMode,
     configureInput: configureTouchInput
   },
   pc: {
-    ...sharedMode,
     configureInput: configureKeyboardInput
   }
 };
 
 const startWebGame = async ({
-  configureInput,
-  terminal = {}
+  configureInput
 }) => {
   await document.fonts.ready;
 
-  const term = new Terminal(terminalOptions(terminal));
+  const term = new Terminal(terminalOptions);
   const keyQueue = [];
 
   term.open(document.getElementById("terminal"));
