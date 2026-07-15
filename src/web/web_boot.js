@@ -83,8 +83,6 @@ const configureTouchInput = ({ keyQueue }) => {
   });
 };
 
-const configureInput = isTouchDevice ? configureTouchInput : configureKeyboardInput;
-
 const startWebGame = async ({
   configureInput
 }) => {
@@ -126,4 +124,6 @@ const startWebGame = async ({
 };
 
 loadMobileFont();
-await startWebGame({ configureInput });
+await startWebGame({
+  configureInput: isTouchDevice ? configureTouchInput : configureKeyboardInput
+});
