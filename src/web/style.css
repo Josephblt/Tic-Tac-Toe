@@ -46,6 +46,7 @@ body[data-mode="mobile"] #app {
   font-family: "Cascadia Code", "Cascadia Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 13px;
   -webkit-font-smoothing: antialiased;
+  letter-spacing: normal;
   place-items: center;
   width: 100%;
 }
@@ -71,6 +72,7 @@ body[data-mode="mobile"] #terminal {
   font-family: inherit !important;
   font-size: inherit !important;
   -webkit-font-smoothing: antialiased !important;
+  letter-spacing: normal !important;
 }
 
 body[data-mode="mobile"] #terminal .xterm,
