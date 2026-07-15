@@ -46,8 +46,27 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           TAG_NAME: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
-        run: >
-          gh release create "$TAG_NAME"
-          "dist/tic-tac-toe-web-${TAG_NAME}.zip"
-          --title "$TAG_NAME"
-          --notes "Static web build for $TAG_NAME."
+        run: |
+          if gh release view "$TAG_NAME" >/dev/null 2>&1; then
+            gh release upload "$TAG_NAME" "dist/tic-tac-toe-web-${TAG_NAME}.zip" --clobber
+          else
+            gh release create "$TAG_NAME" \
+              "dist/tic-tac-toe-web-${TAG_NAME}.zip" \
+              --title "$TAG_NAME" \
+              --notes "Static web build for $TAG_NAME."
+          fi
+
+      - name: Install butler
+        run: |
+          curl -fsSL -o butler.zip https://broth.itch.zone/butler/linux-amd64/LATEST/archive/default
+          unzip -q butler.zip
+          chmod +x butler
+          sudo mv butler /usr/local/bin/butler
+          butler -V
+
+      - name: Upload web build to itch.io
+        env:
+          BUTLER_API_KEY: ${{ secrets.ITCH_API_KEY }}
+          ITCH_TARGET: josephblt-games/tic-tac-toe:web
+          TAG_NAME: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+        run: butler push dist/web "$ITCH_TARGET" --userversion "$TAG_NAME"
