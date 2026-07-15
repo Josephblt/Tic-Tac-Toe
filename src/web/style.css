@@ -42,7 +42,6 @@ body[data-mode="mobile"] {
 
 #controls button {
   appearance: none;
-  min-width: 0;
   border: 1px solid #555;
   background: #222;
   color: #f2f2f2;
