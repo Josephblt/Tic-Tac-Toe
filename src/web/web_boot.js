@@ -83,9 +83,7 @@ const configureTouchInput = ({ keyQueue }) => {
   });
 };
 
-const startWebGame = async ({
-  configureInput
-}) => {
+const startWebGame = async () => {
   await document.fonts.ready;
 
   const term = new Terminal(terminalOptions);
@@ -95,6 +93,7 @@ const startWebGame = async ({
   term.focus();
   term.writeln("Loading Ruby WASM Tic-Tac-Toe...");
 
+  const configureInput = isTouchDevice ? configureTouchInput : configureKeyboardInput;
   configureInput({ keyQueue, term });
 
   window.terminalBridge = {
@@ -124,6 +123,4 @@ const startWebGame = async ({
 };
 
 loadMobileFont();
-await startWebGame({
-  configureInput: isTouchDevice ? configureTouchInput : configureKeyboardInput
-});
+await startWebGame();
