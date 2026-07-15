@@ -23,3 +23,6 @@ jobs:
 
       - name: Run specs
         run: bundle exec rspec
+
+      - name: Build static web bundle
+        run: bundle exec rake web:build
