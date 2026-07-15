@@ -45,6 +45,7 @@ const configureTouchInput = ({ keyQueue }) => {
   controls.querySelectorAll("button").forEach((button) => {
     button.addEventListener("pointerdown", (event) => {
       event.preventDefault();
+      document.activeElement.blur();
       keyQueue.push(gameKeys[button.dataset.input]);
     });
   });
@@ -58,7 +59,9 @@ const startWebGame = async () => {
   const keyQueue = [];
 
   term.open(terminalElement);
-  term.focus();
+  if (!isTouchDevice) {
+    term.focus();
+  }
   term.writeln("Loading Ruby WASM Tic-Tac-Toe...");
 
   const configureInput = isTouchDevice ? configureTouchInput : configureKeyboardInput;
