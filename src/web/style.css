@@ -3,7 +3,7 @@ body {
   height: 100%;
   width: 100%;
   margin: 0;
-  background: #ff0000;
+  background: #111;
   overflow: hidden;
 }
 
@@ -14,6 +14,12 @@ body {
 
 body[data-mode="mobile"] {
   touch-action: none;
+}
+
+#app {
+  display: grid;
+  gap: 12px;
+  justify-items: center;
 }
 
 #terminal .xterm-viewport {
@@ -30,6 +36,8 @@ body[data-mode="mobile"] {
   gap: 8px;
   grid-template-columns: repeat(3, 56px);
   grid-template-rows: repeat(3, 44px) 14px 44px;
+  justify-content: center;
+  justify-self: center;
 }
 
 #controls button {
