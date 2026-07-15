@@ -12,4 +12,9 @@ namespace :web do
   task :clean do
     WebBundle.new.clean
   end
+
+  desc 'Package the static web bundle for release'
+  task :package do
+    WebBundle.new.package
+  end
 end

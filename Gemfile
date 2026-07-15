@@ -12,4 +12,6 @@ gem 'rspec', '~> 3.11'
 
 gem 'rake', '~> 13.0'
 
+gem 'rubyzip', '~> 2.3'
+
 gem 'simplecov', '~> 0.21.2'

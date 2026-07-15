@@ -2,6 +2,7 @@
 
 require 'fileutils'
 require 'pathname'
+require 'zip'
 
 # Builds the browser-playable static bundle for Ruby WASM hosting.
 class WebBundle
@@ -24,6 +25,7 @@ class WebBundle
 
   attr_reader :entrypoint_path,
               :output_path,
+              :package_path,
               :root_path,
               :source_path,
               :web_files
@@ -31,11 +33,13 @@ class WebBundle
   def initialize(root_path: Pathname.pwd,
                  source_path: 'src',
                  output_path: 'dist/web',
+                 package_path: 'dist/tic-tac-toe-web.zip',
                  entrypoint_path: 'src/entrypoints/web_entrypoint.rb',
                  web_files: WEB_FILES)
     @root_path = Pathname(root_path)
     @source_path = @root_path.join(source_path)
     @output_path = @root_path.join(output_path)
+    @package_path = @root_path.join(package_path)
     @entrypoint_path = @root_path.join(entrypoint_path)
     @web_files = web_files
   end
@@ -50,6 +54,13 @@ class WebBundle
 
   def clean
     FileUtils.rm_rf(output_path)
+    FileUtils.rm_f(package_path)
+  end
+
+  def package
+    build
+    write_package
+    package_path
   end
 
   private
@@ -99,5 +110,20 @@ class WebBundle
 
   def write_app_bundle
     output_path.join('app.rb').write(app_bundle)
+  end
+
+  def write_package
+    package_path.dirname.mkpath
+    FileUtils.rm_f(package_path)
+
+    Zip::File.open(package_path, create: true) do |zip_file|
+      package_files.each do |path|
+        zip_file.add(path.relative_path_from(output_path).to_s, path.to_s)
+      end
+    end
+  end
+
+  def package_files
+    output_path.find.select(&:file?).sort
   end
 end
