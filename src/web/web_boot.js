@@ -83,14 +83,7 @@ const configureTouchInput = ({ keyQueue }) => {
   });
 };
 
-const modes = {
-  mobile: {
-    configureInput: configureTouchInput
-  },
-  pc: {
-    configureInput: configureKeyboardInput
-  }
-};
+const configureInput = isTouchDevice ? configureTouchInput : configureKeyboardInput;
 
 const startWebGame = async ({
   configureInput
@@ -133,4 +126,4 @@ const startWebGame = async ({
 };
 
 loadMobileFont();
-await startWebGame(modes[mode]);
+await startWebGame({ configureInput });
