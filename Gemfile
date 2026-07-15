@@ -10,4 +10,6 @@ gem 'tty-reader', '~> 0.9.0'
 
 gem 'rspec', '~> 3.11'
 
+gem 'rake', '~> 13.0'
+
 gem 'simplecov', '~> 0.21.2'
