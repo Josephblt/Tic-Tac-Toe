@@ -1,0 +1,53 @@
+name: Publish
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to publish, for example v0.1.1'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref }}
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+
+      - name: Run specs
+        run: bundle exec rspec
+
+      - name: Package static web bundle
+        run: bundle exec rake web:package
+
+      - name: Name release asset
+        env:
+          TAG_NAME: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+        run: mv dist/tic-tac-toe-web.zip "dist/tic-tac-toe-web-${TAG_NAME}.zip"
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG_NAME: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+        run: >
+          gh release create "$TAG_NAME"
+          "dist/tic-tac-toe-web-${TAG_NAME}.zip"
+          --title "$TAG_NAME"
+          --notes "Static web build for $TAG_NAME."
