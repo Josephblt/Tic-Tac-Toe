@@ -5,13 +5,13 @@ const mode = isTouchDevice ? "mobile" : "pc";
 
 document.body.dataset.mode = mode;
 
-const gameKeys = {
-  action: "\r",
-  back: "\u007F",
-  down: "down",
-  left: "left",
-  right: "right",
-  up: "up"
+const keyboardKeys = {
+  ArrowLeft: "left",
+  ArrowRight: "right",
+  ArrowDown: "down",
+  ArrowUp: "up",
+  Enter: "\r",
+  Backspace: "\u007F"
 };
 
 const appendLink = (attributes) => {
@@ -40,10 +40,7 @@ const loadMobileFont = () => {
 
 const configureKeyboardInput = ({ keyQueue, term }) => {
   term.onKey(({ domEvent }) => {
-    const direction = domEvent.code.replace("Arrow", "").toLowerCase();
-    const action = domEvent.code === "Enter" ? "action" : direction;
-    const input = domEvent.code === "Backspace" ? "back" : action;
-    const key = gameKeys[input];
+    const key = keyboardKeys[domEvent.code];
 
     if (key) {
       keyQueue.push(key);
@@ -58,7 +55,7 @@ const configureTouchInput = ({ keyQueue }) => {
   controls.querySelectorAll("button").forEach((button) => {
     button.addEventListener("pointerdown", (event) => {
       event.preventDefault();
-      keyQueue.push(gameKeys[button.dataset.input]);
+      keyQueue.push(keyboardKeys[button.dataset.input]);
     });
   });
 };
