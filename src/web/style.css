@@ -3,21 +3,22 @@ body {
   height: 100%;
   width: 100%;
   margin: 0;
+  background: #ff0000;
+  overflow: hidden;
 }
 
-#terminal {
-  background: #111;
-  color: #f2f2f2;
+body {
+  display: grid;
+  place-items: center;
+}
+
+body[data-mode="mobile"] {
+  touch-action: none;
 }
 
 #terminal .xterm-viewport {
+  background-color: #111 !important;
   overflow-y: hidden !important;
-}
-
-#terminal .xterm-rows,
-#terminal .xterm-width-cache-measure-container {
-  font-family: "Cascadia Code", "Cascadia Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace !important;
-  letter-spacing: normal !important;
 }
 
 #controls[hidden] {
@@ -37,7 +38,6 @@ body {
   border: 1px solid #555;
   background: #222;
   color: #f2f2f2;
-  font: 700 18px "Cascadia Code", "Cascadia Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   touch-action: manipulation;
 }
 

@@ -16,10 +16,8 @@ const gameKeys = {
 };
 
 const terminalOptions = {
-  cols: 41,
-  rows: 19,
-  convertEol: true,
-  cursorBlink: false
+  cols: 39,
+  rows: 17
 };
 
 const fetchSource = async (path) => {
