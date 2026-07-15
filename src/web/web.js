@@ -60,24 +60,23 @@ const configureTouchInput = ({ keyQueue }) => {
   });
 };
 
+const sharedMode = {
+  focus: true,
+  terminal: {
+    fontFamily: "'Noto Sans Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+    fontSize: 13
+  },
+  waitForFonts: true
+};
+
 const modes = {
   mobile: {
-    configureInput: configureTouchInput,
-    focus: true,
-    terminal: {
-      fontFamily: "'Noto Sans Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-      fontSize: 13
-    },
-    waitForFonts: true
+    ...sharedMode,
+    configureInput: configureTouchInput
   },
   pc: {
-    configureInput: configureKeyboardInput,
-    focus: true,
-    terminal: {
-      fontFamily: "'Noto Sans Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-      fontSize: 13
-    },
-    waitForFonts: true
+    ...sharedMode,
+    configureInput: configureKeyboardInput
   }
 };
 
