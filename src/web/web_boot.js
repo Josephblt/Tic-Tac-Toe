@@ -91,12 +91,10 @@ const configureTouchInput = ({ keyQueue }) => {
 };
 
 const sharedMode = {
-  focus: true,
   terminal: {
     fontFamily: "'Noto Sans Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
     fontSize: 13
-  },
-  waitForFonts: true
+  }
 };
 
 const modes = {
@@ -112,21 +110,15 @@ const modes = {
 
 const startWebGame = async ({
   configureInput,
-  focus = false,
-  terminal = {},
-  waitForFonts = false
+  terminal = {}
 }) => {
-  if (waitForFonts) {
-    await document.fonts.ready;
-  }
+  await document.fonts.ready;
 
   const term = new Terminal(terminalOptions(terminal));
   const keyQueue = [];
 
   term.open(document.getElementById("terminal"));
-  if (focus) {
-    term.focus();
-  }
+  term.focus();
   term.writeln("Loading Ruby WASM Tic-Tac-Toe...");
 
   configureInput({ keyQueue, term });
