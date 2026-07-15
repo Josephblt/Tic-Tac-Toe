@@ -19,14 +19,7 @@ const terminalOptions = {
   cols: 41,
   rows: 19,
   convertEol: true,
-  cursorBlink: false,
-  fontFamily: "'Noto Sans Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-  fontSize: 13,
-  theme: {
-    background: "#111111",
-    foreground: "#f2f2f2",
-    cursor: "#f2f2f2"
-  }
+  cursorBlink: false
 };
 
 const appendLink = (attributes) => {
@@ -86,10 +79,11 @@ const configureTouchInput = ({ keyQueue }) => {
 const startWebGame = async () => {
   await document.fonts.ready;
 
+  const terminalElement = document.getElementById("terminal");
   const term = new Terminal(terminalOptions);
   const keyQueue = [];
 
-  term.open(document.getElementById("terminal"));
+  term.open(terminalElement);
   term.focus();
   term.writeln("Loading Ruby WASM Tic-Tac-Toe...");
 

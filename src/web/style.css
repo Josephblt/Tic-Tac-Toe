@@ -38,7 +38,13 @@ body[data-mode="mobile"] #app {
 }
 
 #terminal {
+  --terminal-cursor: #f2f2f2;
+
+  background: #111;
+  color: #f2f2f2;
   display: grid;
+  font-family: "Noto Sans Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
   place-items: center;
   width: 100%;
 }
@@ -54,7 +60,15 @@ body[data-mode="mobile"] #terminal {
 }
 
 #terminal .xterm-viewport {
+  background-color: #111 !important;
   overflow-y: hidden !important;
+}
+
+#terminal .xterm-rows,
+#terminal .xterm-width-cache-measure-container {
+  color: inherit !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
 }
 
 body[data-mode="mobile"] #terminal .xterm,
