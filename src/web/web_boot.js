@@ -85,7 +85,7 @@ const startWebGame = async () => {
     const { vm } = await DefaultRubyVM(wasmModule);
 
     vm.eval(await fetchSource(appSourcePath));
-    vm.eval("WebEntrypoint.start(WebInput)");
+    vm.eval("WebEntrypoint.start");
   } catch (error) {
     term.writeln("");
     term.writeln(`Ruby WASM Tic-Tac-Toe failed: ${error.message}`);

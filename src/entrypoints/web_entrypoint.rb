@@ -8,10 +8,10 @@ require_relative '../displays/web_terminal_display'
 class WebEntrypoint
   TICK_MS = 120
 
-  def self.start(input_class)
+  def self.start
     bridge = JS.global[:terminalBridge]
     display = WebTerminalDisplay.new(bridge)
-    input = input_class.new(bridge)
+    input = WebInput.new(bridge)
     game = Game.new(display, input, loop_mode: Game::LOOP_MODE_CONTINUOUS)
     game.start
 

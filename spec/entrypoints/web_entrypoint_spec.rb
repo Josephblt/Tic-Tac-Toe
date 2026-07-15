@@ -84,22 +84,22 @@ describe WebEntrypoint do
       display = instance_double('WebTerminalDisplay')
       input = instance_double('WebInput')
       game = nil
-      input_class = Class.new do
-        def initialize(*) end
-      end
 
       JS.global = global
       stub_const('WebTerminalDisplay', Class.new do
         def initialize(*) end
       end)
       allow(WebTerminalDisplay).to receive(:new).with(bridge).and_return(display)
-      allow(input_class).to receive(:new).with(bridge).and_return(input)
+      stub_const('WebInput', Class.new do
+        def initialize(*) end
+      end)
+      allow(WebInput).to receive(:new).with(bridge).and_return(input)
       stub_const('Game', Class.new(FakeWebEntrypointGame))
       allow(Game).to receive(:new).and_wrap_original do |method, *args, **kwargs|
         game = method.call(*args, **kwargs)
       end
 
-      described_class.start(input_class)
+      described_class.start
       global.tick.call
       global.tick.call
 
