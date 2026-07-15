@@ -5,22 +5,22 @@ const mode = isTouchDevice ? "mobile" : "pc";
 
 document.body.dataset.mode = mode;
 
-const keyboardKeys = {
-  ArrowLeft: "left",
-  ArrowRight: "right",
-  ArrowDown: "down",
-  ArrowUp: "up",
-  Enter: "\r",
-  Backspace: "\u007F"
-};
-
-const touchKeys = {
+const gameKeys = {
   action: "\r",
   back: "\u007F",
   down: "down",
   left: "left",
   right: "right",
   up: "up"
+};
+
+const keyboardKeys = {
+  ArrowLeft: gameKeys.left,
+  ArrowRight: gameKeys.right,
+  ArrowDown: gameKeys.down,
+  ArrowUp: gameKeys.up,
+  Enter: gameKeys.action,
+  Backspace: gameKeys.back
 };
 
 const appendLink = (attributes) => {
@@ -63,7 +63,7 @@ const configureTouchInput = ({ keyQueue }) => {
   controls.querySelectorAll("button").forEach((button) => {
     button.addEventListener("pointerdown", (event) => {
       event.preventDefault();
-      keyQueue.push(touchKeys[button.dataset.input]);
+      keyQueue.push(gameKeys[button.dataset.input]);
     });
   });
 };
@@ -71,6 +71,7 @@ const configureTouchInput = ({ keyQueue }) => {
 const modes = {
   mobile: {
     configureInput: configureTouchInput,
+    focus: true,
     terminal: {
       fontFamily: "'Noto Sans Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
       fontSize: 13
@@ -81,14 +82,13 @@ const modes = {
     configureInput: configureKeyboardInput,
     focus: true,
     terminal: {
-      fontFamily: "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-      fontSize: 16
-    }
+      fontFamily: "'Noto Sans Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+      fontSize: 13
+    },
+    waitForFonts: true
   }
 };
 
-if (mode === "mobile") {
-  loadMobileFont();
-}
+loadMobileFont();
 
 await startWebGame(modes[mode]);
